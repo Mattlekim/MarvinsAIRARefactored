@@ -51,9 +51,9 @@ public class RacingWheel
 	private float _elapsedMilliseconds = 0f;
 
 	private float _lastTorque = -1;
-	public float ProtectionDeltaForce { get; set; } = .02f;
-	public float ProtectionMinValue { get; set; } = 0f;
-	public float ProtectionOutputValue { get; private set; } = 0f;
+	public float Matts_DeltaForce { get; set; } = 3f;
+	public float Matts_MinValue { get; set; } = .1f;
+	public float Matts_OutputValue { get; private set; } = 0f;
 
 	public static void SetMairaComboBoxItemsSource( MairaComboBox mairaComboBox )
 	{
@@ -448,10 +448,13 @@ public class RacingWheel
                                 }
 
                                 float deltaTorque = Math.Abs(outputTorque - _lastTorque);
-                                float bias = Math.Clamp(ProtectionDeltaForce / deltaTorque, ProtectionMinValue, 1);
-                                ProtectionOutputValue = outputTorque * bias + (_lastTorque * (1 - bias));
-								outputTorque = ProtectionOutputValue;
-                                _lastTorque = ProtectionOutputValue;
+                                float bias = Math.Clamp(deltaTorque / Matts_DeltaForce, Matts_MinValue, 1);
+                                Matts_OutputValue = outputTorque * bias + (_lastTorque * (1 - bias));
+
+								float detaildScale = outputTorque - Matts_OutputValue;
+							//	if (detaildScale != 0)
+									outputTorque = Matts_OutputValue + detaildScale * DataContext.DataContext.Instance.Settings.RacingWheelDetailBoost;
+                                _lastTorque = Matts_OutputValue;
                             }
 							break;
 					}

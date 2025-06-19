@@ -474,7 +474,7 @@ public class Simulator
 				var y60Hz = SteeringWheelTorque_ST[ 5 ] / DataContext.DataContext.Instance.Settings.RacingWheelMaxForce;
                 
                 _native60HzTorqueGraph.DrawGradientLine( y60Hz, 255, 0, 0 );
-                _native60HzTorqueGraph.DrawGradientLine(app.RacingWheel.ProtectionOutputValue, 0, 0, 255);
+              //  _native60HzTorqueGraph.DrawGradientLine(app.RacingWheel.Matts_OutputValue, 0, 0, 255);
 
                 _native60HzTorqueGraph.Advance();
 
